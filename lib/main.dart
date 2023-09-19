@@ -6,6 +6,9 @@ import 'package:session_expired/Session/session_manager.dart';
 import 'Pages/FirstPage.dart';
 
 final globalNavigatorKey = GlobalKey<NavigatorState>();
+Session session= Session();
+StreamController streamController=StreamController();
+
 void main() {
   runApp( MyApp());
 }
@@ -13,8 +16,6 @@ void main() {
 class MyApp extends StatelessWidget {
    MyApp({super.key});
 
-Session session= Session();
-StreamController streamController=StreamController();
 
 void redirect(){
   if(globalNavigatorKey.currentContext !=null){
@@ -22,6 +23,7 @@ void redirect(){
     MaterialPageRoute(builder: (context)=> FirstPage(session: session,)));
   }
 }
+
   @override
   Widget build(BuildContext context) {
   if(globalNavigatorKey.currentContext!=null){
@@ -30,6 +32,7 @@ void redirect(){
     return SessionManager(
 
       onSessionExpired: () {
+        print('session.enabledLoginPage ${session.enabledLoginPage}');
         if(globalNavigatorKey.currentContext!=null&& session.enabledLoginPage==true){
         {
           print('Session Expired');
@@ -43,7 +46,7 @@ void redirect(){
         }
         }
       },
-      duration: const Duration(seconds: 3),
+      duration: const Duration(seconds: 4),
       streamController: streamController,
       child: MaterialApp(
         title: 'Flutter Demo',

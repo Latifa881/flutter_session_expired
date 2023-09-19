@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
+import '../main.dart';
+
 class SessionManager extends StatefulWidget {
   Widget child;
   VoidCallback onSessionExpired;
@@ -39,8 +41,11 @@ class _SessionManagerState extends State<SessionManager> {
   }
 
   void sessionStart() {
+    if (session.enabledLoginPage) {
+
     closeTimer();
     startTimer();
+    }
   }
 
   void startTimer() {
@@ -58,34 +63,13 @@ class _SessionManagerState extends State<SessionManager> {
 
   @override
   Widget build(BuildContext context) {
+
     return Listener(
       onPointerDown: (_) {
+        print('onPointerDown');
         sessionStart();
       },
-      onPointerCancel: (_){
-        sessionStart();
-      },
-      onPointerHover: (_){
-        sessionStart();
-      },
-      onPointerMove: (_){
-        sessionStart();
-      },
-      onPointerPanZoomStart: (_){
-        sessionStart();
-      },
-      onPointerPanZoomEnd: (_){
-        sessionStart();
-    },
-      onPointerPanZoomUpdate: (_){
-        sessionStart();
-      },
-      onPointerSignal: (_){
-        sessionStart();
-      },
-      onPointerUp: (_){
-        sessionStart();
-      },
+
       child: widget.child,
     );
   }
